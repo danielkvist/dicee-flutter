@@ -31,7 +31,6 @@ import 'package:flutter/material.dart';
 //     * Unless you actually need it, it's not recommend to use
 //       dynamic or var.
 
-
 void main() {
   return runApp(
     MaterialApp(
@@ -48,19 +47,36 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+// Stateless widgets are made to components that don't
+// have the need to update its internal state. So they are
+// basically "dumb" widgets.
+// To specify and work with states we need to use
+// StatefulWidgets.
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber = 3;
+  int rightDiceNumber = 2;
+
   @override
   Widget build(BuildContext context) {
-    int leftDiceNumber = 1;
-    int rightDiceNumber = 5;
-
     return Center(
       child: Row(
         children: <Widget>[
           Expanded(
             child: FlatButton(
               onPressed: () {
-                print('clicked');
+                // We need to clarify that we are
+                // updating the state. It basically
+                // will trigger a reload and update
+                // each part of the Widget that is
+                // using that part of the state.
+                setState(() {
+                  leftDiceNumber = 3;
+                });
               },
               child: Image.asset('images/dice$leftDiceNumber.png'),
             ),
@@ -68,7 +84,9 @@ class DicePage extends StatelessWidget {
           Expanded(
             child: FlatButton(
               onPressed: () {
-                print('clicked');
+                setState(() {
+                  rightDiceNumber = 5;
+                });
               },
               child: Image.asset('images/dice$rightDiceNumber.png'),
             ),
