@@ -59,13 +59,20 @@ class DicePage extends StatefulWidget {
   _DicePageState createState() => _DicePageState();
 }
 
-int rndDice() {
-  return Random().nextInt(6) + 1;
+int rndNumber(int max) {
+  return Random().nextInt(max) + 1;
 }
 
 class _DicePageState extends State<DicePage> {
-  int leftDiceNumber = rndDice();
-  int rightDiceNumber = rndDice();
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 3;
+
+  void changeDiceFace() {
+    setState(() {
+      leftDiceNumber = rndNumber(6);
+      rightDiceNumber = rndNumber(6);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +91,7 @@ class _DicePageState extends State<DicePage> {
                 // We need to sum 1 due to the fact
                 // that the min is 0 and the max in nextInt
                 // is not included.
-                setState(() {
-                  leftDiceNumber = rndDice();
-                  rightDiceNumber = rndDice();
-                });
+                changeDiceFace();
               },
               child: Image.asset('images/dice$leftDiceNumber.png'),
             ),
@@ -95,10 +99,7 @@ class _DicePageState extends State<DicePage> {
           Expanded(
             child: FlatButton(
               onPressed: () {
-                setState(() {
-                  leftDiceNumber = rndDice();
-                  rightDiceNumber = rndDice();
-                });
+                changeDiceFace();
               },
               child: Image.asset('images/dice$rightDiceNumber.png'),
             ),
