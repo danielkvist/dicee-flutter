@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Variables and Data types
@@ -34,6 +35,7 @@ import 'package:flutter/material.dart';
 void main() {
   return runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.red,
         appBar: AppBar(
@@ -57,9 +59,13 @@ class DicePage extends StatefulWidget {
   _DicePageState createState() => _DicePageState();
 }
 
+int rndDice() {
+  return Random().nextInt(6) + 1;
+}
+
 class _DicePageState extends State<DicePage> {
-  int leftDiceNumber = 3;
-  int rightDiceNumber = 2;
+  int leftDiceNumber = rndDice();
+  int rightDiceNumber = rndDice();
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +80,13 @@ class _DicePageState extends State<DicePage> {
                 // will trigger a reload and update
                 // each part of the Widget that is
                 // using that part of the state.
+                //
+                // We need to sum 1 due to the fact
+                // that the min is 0 and the max in nextInt
+                // is not included.
                 setState(() {
-                  leftDiceNumber = 3;
+                  leftDiceNumber = rndDice();
+                  rightDiceNumber = rndDice();
                 });
               },
               child: Image.asset('images/dice$leftDiceNumber.png'),
@@ -85,7 +96,8 @@ class _DicePageState extends State<DicePage> {
             child: FlatButton(
               onPressed: () {
                 setState(() {
-                  rightDiceNumber = 5;
+                  leftDiceNumber = rndDice();
+                  rightDiceNumber = rndDice();
                 });
               },
               child: Image.asset('images/dice$rightDiceNumber.png'),
